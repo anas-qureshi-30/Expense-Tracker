@@ -5,12 +5,16 @@ import sendEmail,googleGemini
 import time
 from datetime import datetime
 from datetime import date
+import json
 
+with open('config.json') as f:
+    config=json.load(f)
+    
 mydb=mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="anas123",
-    database="expense_tracker"
+    host=config["DB_HOST"],
+    user=config["DB_USER"],
+    password=config["DB_PASS"],
+    database=config["DB_NAME"]
 )
 
 myCursor=mydb.cursor(dictionary=True)
@@ -34,10 +38,10 @@ create_query_category="CREATE TABLE IF NOT EXISTS category (id INT AUTO_INCREMEN
 myCursor.execute(create_query_category)
 mydb.commit()
 
-# today=date.today()
-# delete_query="UPDATE budgets SET FROM budgets WHERE end_date < %s"
-# myCursor.execute(delete_query,(today,))
-# mydb.commit()
+today=date.today()
+delete_query="DELETE FROM budgets WHERE end_date < %s"
+myCursor.execute(delete_query,(today,))
+mydb.commit()
 
 def getConnection():
     global mydb
@@ -46,7 +50,7 @@ def getConnection():
     return mydb
 
 app=Flask(__name__)
-app.secret_key = 'secret_key'
+app.secret_key=config["SECRET_KEY"]
 
 @app.route("/")
 def home_page():

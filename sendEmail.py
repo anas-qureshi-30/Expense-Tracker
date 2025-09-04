@@ -2,12 +2,16 @@ import smtplib
 from email.message import EmailMessage
 import secrets
 import mysql.connector
+import json
+
+with open('config.json') as f:
+    config=json.load(f)
 
 mydb=mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="anas123",
-    database="expense_tracker"
+    host=config["DB_HOST"],
+    user=config["DB_USER"],
+    password=config["DB_PASS"],
+    database=config["DB_NAME"]
 )
 myCursor=mydb.cursor(dictionary=True)
 
@@ -25,5 +29,5 @@ def send_reset_email(user_email):
     msg.set_content(f'Click this link to reset your password: {reset_link}')
 
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login('anasqureshi6556@gmail.com', 'ybme bgrz qjrw zkut')
+        smtp.login(config["EMAIL"], config["APP_PASSWORD"])
         smtp.send_message(msg)
