@@ -6,7 +6,7 @@ import json
 
 with open('config.json') as f:
     config=json.load(f)
-
+    
 mydb=mysql.connector.connect(
     host=config["DB_HOST"],
     user=config["DB_USER"],
@@ -24,7 +24,7 @@ def send_reset_email(user_email):
 
     msg = EmailMessage()
     msg['Subject'] = 'Reset Your Password'
-    msg['From'] = 'anasqureshi6556@gmail.com'
+    msg['From'] = config["EMAIL"]
     msg['To'] = user_email
     msg.set_content(f'Click this link to reset your password: {reset_link}')
 

@@ -275,6 +275,25 @@ def dashboard():
 
 @app.route('/logout')
 def logout():
+    respone=make_response(redirect('/'))
+    respone.set_cookie("loggedin",'',expires=0)
+    respone.set_cookie("user_id",expires=0)
+    respone.set_cookie("user_email",'',expires=0)
+    respone.set_cookie("first_name",'',expires=0)
+    respone.set_cookie("last_name",'',expires=0)
+    respone.set_cookie("currency",'',expires=0)
+    respone.set_cookie("phone_no",'',expires=0)
+    respone.set_cookie("monthly_income",'',expires=0)
+    respone.set_cookie("financial_goal",'',expires=0)
+    respone.set_cookie("payday",'',expires=0)
+    respone.set_cookie("budget_alert",'',expires=0)
+    respone.set_cookie("unusual_spend_alert",'',expires=0)
+    respone.set_cookie("investment_insights",'',expires=0)
+    respone.set_cookie("budget_id","",expires=0)
+    return respone
+
+@app.route('/deleteAccount')
+def deleteAccount():
     id=request.cookies.get("user_id")
     conn=getConnection()
     myCursorPrivate=conn.cursor(dictionary=True)
@@ -297,7 +316,6 @@ def logout():
     respone.set_cookie("budget_id","",expires=0)
     mydb.commit()
     return respone
-
 @app.route('/budget',methods=['GET','POST'])
 def budget():
     return render_template('budget.html')
