@@ -1,0 +1,10 @@
+{
+  "DB_HOST": "host",
+  "DB_USER": "userName",
+  "DB_PASS": "yourPassword",
+  "DB_NAME": "databaseName",
+  "SECRET_KEY": "yourSecretKey",
+  "EMAIL":"senderMail",
+  "APP_PASSWORD":"yourAppPassword",
+  "GOOGLE_API":"yourGoogleAPI"
+}
