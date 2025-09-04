@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename='js/viewPastTransaction.js')}}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/viewPastTransaction.css')}}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>FinSight AI | Transaction History</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo">
+                <i class="fas fa-robot" style="color: white; font-size: 28px;"></i>
+            </div>
+            <div class="app-name">
+                <span class="brand-name">Fin</span><span class="brand-name">Sight</span><span
+                    class="brand-name">AI</span>
+            </div>
+        </div>
+        <div class="navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/insights">Insights</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/settings">Settings</a></li>
+                <li><a href="/logout"><button class="logout-btn">Logout</button></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="page-title">Transaction <span>History</span></h1>
+
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Search transactions..." id="searchInput"
+                oninput="searchTransactions()">
+        </div>
+
+        <div class="transactions-container" id="transactionsContainer">
+        </div>
+    </div>
+
+
+</body>
+
+</html>

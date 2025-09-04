@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/homePage.css')}}">
+    <script src="{{url_for('static', filename='js/homePage.js')}}"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>FinSight | Home</title>
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo">
+                <i class="fas fa-robot" style="color: white; font-size: 28px;"></i>
+            </div>
+            <div class="app-name">
+                <span class="brand-name">Fin</span><span class="brand-name">Sight</span><span
+                    class="brand-name">AI</span>
+            </div>
+        </div>
+        <div class="navigation">
+            <ul>
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Insights</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="/settings">Settings</a></li>
+                <li><a href="/logout"><button class="logout-btn">Logout</button></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Take Control of Your <span>Financial Future</span> with AI-Powered Insights</h1>
+            <p class="hero-subtitle">FinSight AI helps you track expenses, analyze spending patterns, and make smarter
+                financial decisions with personalized insights and intelligent recommendations.</p>
+            <div class="action-btns">
+                <a href="/addExpense" class="primary-btn" id="addExpenseMain">
+                    <i class="fas fa-plus"></i> Add Expense
+                </a>
+                <a href="/dashboard" class="secondary-btn">
+                    <i class="fas fa-chart-line"></i> View Dashboard
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="{{url_for('static',filename='images/FinSightLogo.jpeg')}}">
+        </div>
+    </section>
+
+    <div class="quick-actions">
+        <a href="/addExpense" style="text-decoration: none;" id="addExpense">
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-plus"></i>
+                </div>
+                <h3 class="action-title">Add Expense</h3>
+                <p class="action-subtitle">Record your daily expenses</p>
+            </div>
+        </a>
+        <a href="/budget" style="text-decoration: none;">
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3 class="action-title">Budget</h3>
+                <p class="action-subtitle">Set and track your budgets</p>
+            </div>
+        </a>
+        <a href="#" style="text-decoration: none;">
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3 class="action-title">Insights</h3>
+                <p class="action-subtitle">Get personalized tips</p>
+            </div>
+        </a>
+        
+        <a href="/viewPastTransaction" style="text-decoration: none;">
+            <div class="action-card">
+                <div class="action-icon">
+                    <i class="fas fa-history"></i>
+                </div>
+                <h3 class="action-title">History</h3>
+                <p class="action-subtitle">View past transactions</p>
+            </div>
+        </a>
+    </div>
+
+    <section class="features-section">
+        <h2 class="section-title">Smart Features for Smarter Finances</h2>
+        <div class="features-container">
+            <div class="feature-card">
+                <i class="fas fa-robot feature-icon"></i>
+                <h3 class="feature-title">AI-Powered Insights</h3>
+                <p class="feature-description">Get intelligent recommendations and insights about your spending habits
+                    based on your transaction history and financial goals.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h3 class="feature-title">Expense Tracking</h3>
+                <p class="feature-description">Easily track and categorize your expenses to understand where your money
+                    is going and identify areas to save.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-comments feature-icon"></i>
+                <h3 class="feature-title">Financial Assistant</h3>
+                <p class="feature-description">Chat with our AI assistant anytime to get answers to your financial
+                    questions, budgeting help, and personalized advice.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-value" id="totalTransactions">
+                    <span id="currencySymbol" style="margin-right: 2px; font-weight: bold;">%</span>
+                    <span id="transactionValue">2458</span>
+                </div>
+
+                <div class="stat-label">Current Month Spending</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">15%</div>
+                <div class="stat-label">Saved from Last Month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="countTransactions">3</div>
+                <div class="stat-label">Current Month Transactions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">3</div>
+                <div class="stat-label">Top Spending Categories</div>
+            </div>
+        </div>
+    </section>
+
+    <a href="/chat" class="chat-button">
+        <i class="fa fa-comments"></i>
+    </a>
+</body>
+
+
+</html>

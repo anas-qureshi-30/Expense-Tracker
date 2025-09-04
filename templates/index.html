@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/FinSightLogo.jpeg') }}" type="image/x-icon">
+    <title>FinSight AI | Create Account</title>
+            
+</head>
+<body>
+    <div class="mainContainer">
+        <div class="leftContainer">
+            <div class="brand">
+                <div class="logoContainer">
+                    <i class="fas fa-chart-line logoIcon"></i>
+                    <h1 class="FinSight">FinSight AI</h1>
+                </div>
+                <p class="tagline">Smart financial insights powered by artificial intelligence</p>
+            </div>
+            
+            <div class="imageContainer">
+                <img id="createImg" src="{{url_for('static',filename='images/createAccountImg.jpg')}}" alt="Financial Planning">
+            </div>
+            
+            <div class="features">
+                <div class="featureItem">
+                    <i class="fas fa-robot featureIcon"></i>
+                    <span>AI-powered financial analysis</span>
+                </div>
+                <div class="featureItem">
+                    <i class="fas fa-shield-alt featureIcon"></i>
+                    <span>Bank-level security protection</span>
+                </div>
+                <div class="featureItem">
+                    <i class="fas fa-chart-pie featureIcon"></i>
+                    <span>Personalized investment strategies</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="rightContainer">
+            <div class="loginContainer">
+                <h1 id="createAccount">Create Account</h1>
+                <p class="accountDesc">Join thousands of users making smarter financial decisions</p>
+                
+                <form action="/index" class="formGroup" id="signupForm" method="post">
+                    <div class="nameInput">
+                        <div class="inputGroup">
+                            <input type="text" name="firstname" id="firstname" placeholder="First Name" class="input" required>
+                            <i class="fas fa-user inputIcon"></i>
+                            <span class="validation-message" id="firstnameError">Please enter your first name</span>
+                        </div>
+                        
+                        <div class="inputGroup">
+                            <input type="text" name="lastname" id="lastname" placeholder="Last Name" class="input" required>
+                            <i class="fas fa-user inputIcon"></i>
+                            <span class="validation-message" id="lastnameError">Please enter your last name</span>
+                        </div>
+                    </div>
+                    
+                    <div class="inputGroup">
+                        <input type="email" name="email" id="email" placeholder="Email Address" class="input" required>
+                        <i class="fas fa-envelope inputIcon"></i>
+                        <span class="validation-message" id="emailError">Please enter a valid email address</span>
+                    </div>
+                    
+                    <div class="inputGroup">
+                        <div class="passwordContainer">
+                            <input type="password" name="password" id="password" placeholder="Password" class="input" required>
+                            <i class="fas fa-lock inputIcon"></i>
+                            <i class="fas fa-eye passwordToggle" id="togglePassword"></i>
+                        </div>
+                        <span class="validation-message" id="passwordError">Password must be at least 8 characters</span>
+                    </div>
+                    
+                    <button type="submit" class="submitBtn">Create Account</button>
+                </form>
+                
+                <div class="divider">
+                    <span class="dividerText">or sign up with</span>
+                </div>
+                
+                <div class="socialLogin">
+                    <div class="socialBtn">
+                        <i class="fab fa-google socialIcon google"></i>
+                    </div>
+                    <div class="socialBtn">
+                        <i class="fab fa-facebook-f socialIcon facebook"></i>
+                    </div>
+                    <div class="socialBtn">
+                        <i class="fab fa-apple socialIcon apple"></i>
+                    </div>
+                </div>
+                
+                <p class="login">Already have an account? <a href="/login" class="loginLink">Log in</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

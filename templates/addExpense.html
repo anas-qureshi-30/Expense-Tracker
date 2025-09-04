@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename='js/addExpense.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/addExpense.css')}}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <title>FinSight AI | Add Expense</title>
+
+</head>
+
+<body>
+
+    <img src="{{url_for('static',filename='images/addExpense.jpg')}}">
+
+    <div class="rightContainer">
+        <div class="subContainer">
+            <a href="/homePage"><span class="heading" id="blueText">Home /</span></a><span class="heading"> Add
+                Expense</span>
+
+            <form method="post" class="formGrp">
+                <label for="expense">Enter Your Expense</label>
+                <input type="number" name="expense" id="expense" placeholder="0.00" min="0" required />
+
+                <label for="description">Enter Description</label>
+                <input type="text" name="description" id="description" placeholder="What was this expense for?"
+                    required>
+
+                <label>Select Category</label>
+                <div class="category-container category-icons">
+                    <div class="category-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-shopping-basket"></i>
+                        </div>
+                        <div class="icon-name">Groceries</div>
+                    </div>
+
+                    <div class="category-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="icon-name">Entertainment</div>
+                    </div>
+
+                    <div class="category-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                        <div class="icon-name">Shopping</div>
+                    </div>
+
+                    <div class="category-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="icon-name">Utilities</div>
+                    </div>
+
+                    <div class="category-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="icon-name">Transportation</div>
+                    </div>
+
+                    <div class="category-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="icon-name">Healthcare</div>
+                    </div>
+
+                    <div class="category-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="icon-name">Education</div>
+                    </div>
+
+                    <div class="category-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-plane"></i>
+                        </div>
+                        <div class="icon-name">Travel</div>
+                    </div>
+
+                    <div class="category-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="icon-name">Dining</div>
+                    </div>
+
+                    <div class="category-icon">
+                        <div class="icon-circle">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                        <div class="icon-name">Other</div>
+                    </div>
+                </div>
+
+                <select name="category" id="category" style="display: none;" required>
+                    <option value="groceries">Groceries</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="utilities">Utilities</option>
+                    <option value="transportation">Transportation</option>
+                    <option value="healthcare">Healthcare</option>
+                    <option value="education">Education</option>
+                    <option value="travel">Travel</option>
+                    <option value="dining">Dining</option>
+                    <option value="other" selected>Other</option>
+                </select>
+
+                <div class="date-time-container">
+                    <div>
+                        <label for="expenseDate">Date</label>
+                        <input type="date" name="expenseDate" id="expenseDate" required>
+                    </div>
+
+                    <div>
+                        <label for="expenseTime">Time</label>
+                        <input type="time" name="expenseTime" id="expenseTime" required>
+                    </div>
+                </div>
+
+                <input type="submit" value="Add Expense">
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename='js/chat.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/chat.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>FinSight | AI Financial Assistant</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="brand">
+            <i class="fas fa-robot brand-icon"></i>
+            <div class="app-name">
+                <span class="brand-name">Fin</span><span class="brand-name">Sight</span><span class="brand-name">AI</span>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <a href="/homePage" class="close-button">
+                <i class="fas fa-times"></i>
+            </a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="chat-container">
+            <div class="welcome-section">
+                <i class="fas fa-robot welcome-icon"></i>
+                <h1 class="welcome-title">Welcome to FinSight AI</h1>
+                <p class="welcome-subtitle">Your intelligent financial assistant. Ask me anything about personal finance, investments, market trends, or financial planning.</p>
+                
+                <div class="example-queries">
+                    <div class="example-query">
+                        <div class="example-query-title">Investment Analysis</div>
+                        <div class="example-query-text">What investments should I consider for retirement?</div>
+                    </div>
+                    <div class="example-query">
+                        <div class="example-query-title">Market Insights</div>
+                        <div class="example-query-text">How do rising interest rates affect the stock market?</div>
+                    </div>
+                    <div class="example-query">
+                        <div class="example-query-title">Financial Planning</div>
+                        <div class="example-query-text">How much should I save for an emergency fund?</div>
+                    </div>
+                    <div class="example-query">
+                        <div class="example-query-title">Budget Help</div>
+                        <div class="example-query-text">What's a good budgeting strategy for young professionals?</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="message user-message">
+                <div class="message-header user-header">
+                    <i class="fas fa-user"></i>You
+                </div>
+                <div class="message-content">
+                    I'm planning to invest $10,000 and I'm not sure where to start. I'm in my 30s and want to build wealth for the future. What investment options would you recommend for a moderate risk tolerance?
+                </div>
+                <div class="message-time">Today, 2:45 PM</div>
+            </div>
+
+            <div class="message ai-message">
+                <div class="message-header ai-header">
+                    <i class="fas fa-robot"></i>FinSight AI
+                </div>
+                <div class="message-content">
+                    <p>Great question! For a $10,000 investment with moderate risk tolerance in your 30s, here are some balanced options to consider:</p>
+                    <br>
+                    <p><strong>1. Diversified ETF Portfolio (60-70%)</strong><br>
+                    Allocate the majority to a mix of low-cost ETFs that track major indexes like S&P 500, international markets, and some sector-specific ETFs.</p>
+                    <br>
+                    <p><strong>2. Bond ETFs (15-20%)</strong><br>
+                    Add some stability with bond ETFs, focusing on intermediate-term bonds for a balance of yield and safety.</p>
+                    <br>
+                    <p><strong>3. Individual Stocks (10-15%)</strong><br>
+                    If you're interested in direct stock ownership, allocate a smaller portion to quality companies you understand and believe in for the long term.</p>
+                    <br>
+                    <p>Before investing, make sure you have an emergency fund and no high-interest debt. Would you like more specific ETF recommendations based on your goals?</p>
+                </div>
+                <div class="message-time">Today, 2:47 PM</div>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <textarea class="input-field" placeholder="Ask about finance, investments, budgeting..."></textarea>
+            <button class="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>

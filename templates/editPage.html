@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinSight | Edit Budget</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .edit-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 32px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .edit-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .edit-header h2 {
+            color: #1f2937;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .category-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .bg-shopping {
+            background-color: #FF6B6B;
+            color: white;
+        }
+
+        .bg-groceries {
+            background-color: #4ECDC4;
+            color: white;
+        }
+
+        .bg-entertainment {
+            background-color: #FFD166;
+            color: var(--color-text-primary);
+        }
+
+        .bg-utilities {
+            background-color: #6A0572;
+            color: white;
+        }
+
+        .bg-transportation {
+            background-color: #F29E4C;
+            color: white;
+        }
+
+        .bg-healthcare {
+            background-color: #4CB944;
+            color: white;
+        }
+
+        .bg-education {
+            background-color: #9B59B6;
+            color: white;
+        }
+
+        .bg-travel {
+            background-color: #3498DB;
+            color: white;
+        }
+
+        .bg-dining {
+            background-color: #E67E22;
+            color: white;
+        }
+
+        .bg-other {
+            background-color: #95A5A6;
+            color: white;
+        }
+
+
+        .form-group {
+            margin-bottom: 32px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .currency-input {
+            position: relative;
+        }
+
+        .currency-symbol {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6b7280;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 16px 16px 16px 40px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.2s;
+            background: #f9fafb;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-cancel {
+            background: #f3f4f6;
+            color: #374151;
+            border: 2px solid #e5e7eb;
+        }
+
+        .btn-cancel:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.3);
+        }
+
+        .current-info {
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border-left: 4px solid #4f46e5;
+        }
+
+        .current-info-label {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+
+        .current-amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="edit-card">
+    </div>
+
+    <script>
+        let global_category
+        function cancelEdit() {
+            alert('Edit cancelled');
+            window.history.back();
+        }
+        async function update() {
+            const newAmount = document.getElementById('budgetAmount').value
+            const value = {
+                "newAmount": newAmount,
+                "category": global_category
+            }
+            const respone = await fetch('/api/setEditAmount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(value)
+            });
+            const data = await respone.json()
+            if (data.result == "failed") {
+                alert("The new amount is more than what’s left in your budget.")
+
+            }
+            if (data.result == "success") {
+                alert("Amount updated successfully.")
+                window.open(
+                    "/budget",
+                    '_self'
+                )
+            }
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+            const editWindowData = JSON.parse(sessionStorage.getItem("editWindowData"));
+            const editCard = document.createElement('div')
+            global_category = editWindowData.category
+            editCard.classList.add('edit-card');
+            editCard.innerHTML = `<div class="edit-header">
+            <h2>Edit Budget</h2>
+            <div class="category-info">
+                <div class="category-icon bg-${editWindowData.category}">
+                    <i class="${editWindowData.icon}"></i>
+                </div>
+                <span>${editWindowData.category.charAt(0).toUpperCase() + editWindowData.category.slice(1)}</span>
+            </div>
+        </div>
+
+        <div class="current-info">
+            <div class="current-info-label">Current Budget</div>
+            <div class="current-amount">${editWindowData.currencySymbol}${editWindowData.amount}</div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">New Budget Amount</label>
+            <div class="currency-input">
+                <span class="currency-symbol">${editWindowData.currencySymbol}</span>
+                <input type="number" class="form-input" id="budgetAmount" value="${editWindowData.amount}" min="0" step="1" placeholder="0.00">
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-cancel" onclick="cancelEdit()">Cancel</button>
+            <button class="btn btn-save" onclick="update()">Save</button>
+        </div>`;
+            document.getElementById('edit-card').appendChild(editCard);
+            document.getElementById('budgetAmount').focus();
+            document.getElementById('budgetAmount').select();
+        });
+
+    </script>
+</body>
+
+</html>

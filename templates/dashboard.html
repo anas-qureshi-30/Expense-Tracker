@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinSight AI | Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --color-primary: #1e88e5;
+            --color-primary-dark: #1565c0;
+            --color-primary-light: #bbdefb;
+            --color-secondary: #26a69a;
+            --color-accent: #00c853;
+            --color-text-primary: #212121;
+            --color-text-secondary: #616161;
+            --color-text-tertiary: #9e9e9e;
+            --color-border: #e0e0e0;
+            --color-error: #f44336;
+            --color-success: #4caf50;
+            --color-warning: #ff9800;
+            --color-white: #ffffff;
+            --color-bg-light: #f5f7fa;
+            --font-family: 'Poppins', sans-serif;
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --transition-speed: 0.3s;
+            --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-family);
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: var(--color-bg-light);
+        }
+
+        .navbar {
+            width: 100%;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 0 2rem;
+            background-color: var(--color-white);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+        }
+
+        .app-name {
+            display: flex;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .app-name span:first-child {
+            color: var(--color-primary);
+        }
+
+        .app-name span:nth-child(2) {
+            color: var(--color-text-primary);
+        }
+
+        .app-name span:last-child {
+            color: var(--color-accent);
+            margin-left: 2px;
+        }
+
+        .navigation ul {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .navigation ul li a {
+            text-decoration: none;
+            color: var(--color-text-primary);
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: var(--border-radius-md);
+            transition: all var(--transition-speed) ease;
+            display: inline-block;
+        }
+
+        .navigation ul li a:hover {
+            color: var(--color-primary);
+            background-color: rgba(30, 136, 229, 0.08);
+        }
+
+        .navigation ul li.active a {
+            color: var(--color-primary);
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+            color: var(--color-white);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 4px 8px rgba(21, 101, 192, 0.2);
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(21, 101, 192, 0.3);
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-subtitle {
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--color-white);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: all var(--transition-speed) ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-icon.income {
+            background: linear-gradient(135deg, var(--color-success), #388e3c);
+        }
+
+        .stat-icon.expense {
+            background: linear-gradient(135deg, var(--color-error), #d32f2f);
+        }
+
+        .stat-icon.budget {
+            background: linear-gradient(135deg, var(--color-warning), #f57c00);
+        }
+
+        .stat-icon.savings {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .stat-change.positive {
+            color: var(--color-success);
+        }
+
+        .stat-change.negative {
+            color: var(--color-error);
+        }
+
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--color-white);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: between;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        .loading-spinner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 300px;
+            color: var(--color-text-secondary);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--color-border);
+            border-top: 4px solid var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .recent-transactions {
+            background: var(--color-white);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: white;
+        }
+
+        .transaction-details h4 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .transaction-details p {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+        }
+
+        .transaction-amount.expense {
+            color: var(--color-error);
+        }
+
+        .transaction-amount.income {
+            color: var(--color-success);
+        }
+
+        .budget-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .budget-card {
+            background: var(--color-white);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .budget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .budget-progress {
+            width: 100%;
+            height: 8px;
+            background-color: var(--color-border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .budget-progress-bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .budget-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+        }
+
+        @media (max-width: 1024px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 1rem;
+                height: auto;
+                flex-direction: column;
+                padding: 1rem;
+            }
+
+            .navigation {
+                width: 100%;
+                margin-top: 1rem;
+            }
+
+            .navigation ul {
+                flex-wrap: wrap;
+                gap: 1rem;
+                justify-content: center;
+            }
+
+            .dashboard-container {
+                padding: 1rem;
+            }
+
+            .dashboard-title {
+                font-size: 2rem;
+            }
+
+            .stats-overview {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo">
+                <i class="fas fa-robot" style="color: white; font-size: 28px;"></i>
+            </div>
+            <div class="app-name">
+                <span class="brand-name">Fin</span><span class="brand-name">Sight</span><span class="brand-name">AI</span>
+            </div>
+        </div>
+        <div class="navigation">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li class="active"><a href="#">Dashboard</a></li>
+                <li><a href="#">Insights</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#"><button class="logout-btn">Logout</button></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Financial Dashboard</h1>
+            <p class="dashboard-subtitle">Track your financial progress and spending patterns</p>
+        </div>
+
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon income">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="totalIncome">₹0</div>
+                <div class="stat-label">Total Income</div>
+                <div class="stat-change positive" id="incomeChange">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Loading...</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon expense">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="totalExpense">₹0</div>
+                <div class="stat-label">Total Expenses</div>
+                <div class="stat-change negative" id="expenseChange">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>Loading...</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon budget">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="remainingBudget">₹0</div>
+                <div class="stat-label">Remaining Budget</div>
+                <div class="stat-change positive" id="budgetChange">
+                    <i class="fas fa-check"></i>
+                    <span>Loading...</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon savings">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="totalSavings">₹0</div>
+                <div class="stat-label">Total Savings</div>
+                <div class="stat-change positive" id="savingsChange">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>Loading...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Expense Trends</h3>
+                </div>
+                <div class="chart-container">
+                    <div class="loading-spinner" id="expenseChartLoader">
+                        <div class="spinner"></div>
+                        <span>Loading expense data...</span>
+                    </div>
+                    <canvas id="expenseChart" style="display: none;"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Category Breakdown</h3>
+                </div>
+                <div class="chart-container">
+                    <div class="loading-spinner" id="categoryChartLoader">
+                        <div class="spinner"></div>
+                        <span>Loading categories...</span>
+                    </div>
+                    <canvas id="categoryChart" style="display: none;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Monthly Comparison</h3>
+                </div>
+                <div class="chart-container">
+                    <div class="loading-spinner" id="monthlyChartLoader">
+                        <div class="spinner"></div>
+                        <span>Loading monthly data...</span>
+                    </div>
+                    <canvas id="monthlyChart" style="display: none;"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Savings Goal Progress</h3>
+                </div>
+                <div class="chart-container">
+                    <div class="loading-spinner" id="savingsChartLoader">
+                        <div class="spinner"></div>
+                        <span>Loading savings data...</span>
+                    </div>
+                    <canvas id="savingsChart" style="display: none;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Weekly Spending Pattern</h3>
+                </div>
+                <div class="chart-container">
+                    <div class="loading-spinner" id="weeklyChartLoader">
+                        <div class="spinner"></div>
+                        <span>Loading weekly data...</span>
+                    </div>
+                    <canvas id="weeklyChart" style="display: none;"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Investment Portfolio</h3>
+                </div>
+                <div class="chart-container">
+                    <div class="loading-spinner" id="portfolioChartLoader">
+                        <div class="spinner"></div>
+                        <span>Loading portfolio data...</span>
+                    </div>
+                    <canvas id="portfolioChart" style="display: none;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-section">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Cash Flow Analysis</h3>
+                </div>
+                <div class="chart-container">
+                    <div class="loading-spinner" id="cashflowChartLoader">
+                        <div class="spinner"></div>
+                        <span>Loading cashflow data...</span>
+                    </div>
+                    <canvas id="cashflowChart" style="display: none;"></canvas>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Budget vs Actual</h3>
+                </div>
+                <div class="chart-container">
+                    <div class="loading-spinner" id="budgetVsActualLoader">
+                        <div class="spinner"></div>
+                        <span>Loading budget comparison...</span>
+                    </div>
+                    <canvas id="budgetVsActualChart" style="display: none;"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="budget-overview">
+            <div class="budget-card">
+                <div class="budget-header">
+                    <h3>Food & Dining</h3>
+                    <span id="foodSpent">₹0 / ₹15000</span>
+                </div>
+                <div class="budget-progress">
+                    <div class="budget-progress-bar" id="foodProgress" style="background: linear-gradient(135deg, #4caf50, #388e3c); width: 0%"></div>
+                </div>
+                <div class="budget-info">
+                    <span id="foodRemaining">₹15000 remaining</span>
+                    <span id="foodPercent">0%</span>
+                </div>
+            </div>
+
+            <div class="budget-card">
+                <div class="budget-header">
+                    <h3>Transportation</h3>
+                    <span id="transportSpent">₹0 / ₹8000</span>
+                </div>
+                <div class="budget-progress">
+                    <div class="budget-progress-bar" id="transportProgress" style="background: linear-gradient(135deg, #2196f3, #1976d2); width: 0%"></div>
+                </div>
+                <div class="budget-info">
+                    <span id="transportRemaining">₹8000 remaining</span>
+                    <span id="transportPercent">0%</span>
+                </div>
+            </div>
+
+            <div class="budget-card">
+                <div class="budget-header">
+                    <h3>Entertainment</h3>
+                    <span id="entertainmentSpent">₹0 / ₹5000</span>
+                </div>
+                <div class="budget-progress">
+                    <div class="budget-progress-bar" id="entertainmentProgress" style="background: linear-gradient(135deg, #ff9800, #f57c00); width: 0%"></div>
+                </div>
+                <div class="budget-info">
+                    <span id="entertainmentRemaining">₹5000 remaining</span>
+                    <span id="entertainmentPercent">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-transactions">
+            <h3 class="chart-title" style="margin-bottom: 1.5rem;">Recent Transactions</h3>
+            <div id="transactionsList">
+                <!-- Transactions will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate loading delay and data fetching
+        let expenseChart, categoryChart;
+        
+        // Function to simulate API calls with loading states
+        function simulateDataLoading() {
+            // Load stats with animation
+            setTimeout(() => {
+                animateValue('totalIncome', 0, 75000, 1500);
+                animateValue('totalExpense', 0, 45000, 1500);
+                animateValue('remainingBudget', 0, 28000, 1500);
+                animateValue('totalSavings', 0, 30000, 1500);
+                
+                setTimeout(() => {
+                    document.getElementById('incomeChange').innerHTML = '<i class="fas fa-arrow-up"></i><span>+12% from last month</span>';
+                    document.getElementById('expenseChange').innerHTML = '<i class="fas fa-arrow-down"></i><span>-8% from last month</span>';
+                    document.getElementById('budgetChange').innerHTML = '<i class="fas fa-check"></i><span>On track</span>';
+                    document.getElementById('savingsChange').innerHTML = '<i class="fas fa-arrow-up"></i><span>+25% from last month</span>';
+                }, 1000);
+            }, 500);
+
+            // Load expense chart
+            setTimeout(() => {
+                loadExpenseChart();
+            }, 1000);
+
+            // Load category chart
+            setTimeout(() => {
+                loadCategoryChart();
+            }, 1500);
+
+            // Load monthly comparison chart
+            setTimeout(() => {
+                loadMonthlyChart();
+            }, 2000);
+
+            // Load savings goal chart
+            setTimeout(() => {
+                loadSavingsChart();
+            }, 2500);
+
+            // Load weekly pattern chart
+            setTimeout(() => {
+                loadWeeklyChart();
+            }, 3000);
+
+            // Load portfolio chart
+            setTimeout(() => {
+                loadPortfolioChart();
+            }, 3500);
+
+            // Load cashflow chart
+            setTimeout(() => {
+                loadCashflowChart();
+            }, 4000);
+
+            // Load budget vs actual chart
+            setTimeout(() => {
+                loadBudgetVsActualChart();
+            }, 4500);
+
+            // Load budget progress
+            setTimeout(() => {
+                loadBudgetProgress();
+            }, 5000);
+
+            // Load recent transactions
+            setTimeout(() => {
+                loadRecentTransactions();
+            }, 5500);
+        }
+
+        function animateValue(id, start, end, duration) {
+            const element = document.getElementById(id);
+            const range = end - start;
+            const startTime = Date.now();
+            
+            function updateValue() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(start + (range * progress));
+                element.textContent = '₹' + current.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(updateValue);
+                }
+            }
+            
+            updateValue();
+        }
+
+        function loadExpenseChart() {
+            document.getElementById('expenseChartLoader').style.display = 'none';
+            document.getElementById('expenseChart').style.display = 'block';
+            
+            const ctx = document.getElementById('expenseChart').getContext('2d');
+            expenseChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Expenses',
+                        data: [8000, 12000, 9500, 15000, 11000, 13500],
+                        borderColor: '#1e88e5',
+                        backgroundColor: 'rgba(30, 136, 229, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Income',
+                        data: [15000, 18000, 16000, 20000, 17500, 19000],
+                        borderColor: '#4caf50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadCategoryChart() {
+            document.getElementById('categoryChartLoader').style.display = 'none';
+            document.getElementById('categoryChart').style.display = 'block';
+            
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Food', 'Transport', 'Entertainment', 'Bills', 'Shopping'],
+                    datasets: [{
+                        data: [12000, 6000, 3500, 8000, 4500],
+                        backgroundColor: [
+                            '#4caf50',
+                            '#2196f3',
+                            '#ff9800',
+                            '#f44336',
+                            '#9c27b0'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadMonthlyChart() {
+            document.getElementById('monthlyChartLoader').style.display = 'none';
+            document.getElementById('monthlyChart').style.display = 'block';
+            
+            const ctx = document.getElementById('monthlyChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'This Year',
+                        data: [45000, 52000, 48000, 61000, 55000, 67000],
+                        backgroundColor: 'rgba(30, 136, 229, 0.8)',
+                        borderColor: '#1e88e5',
+                        borderWidth: 2
+                    }, {
+                        label: 'Last Year',
+                        data: [38000, 45000, 42000, 48000, 46000, 52000],
+                        backgroundColor: 'rgba(76, 175, 80, 0.8)',
+                        borderColor: '#4caf50',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadSavingsChart() {
+            document.getElementById('savingsChartLoader').style.display = 'none';
+            document.getElementById('savingsChart').style.display = 'block';
+            
+            const ctx = document.getElementById('savingsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Savings Goal',
+                        data: [50000, 100000, 150000, 200000, 250000, 300000],
+                        borderColor: '#ff9800',
+                        borderDash: [5, 5],
+                        backgroundColor: 'transparent',
+                        borderWidth: 2,
+                        fill: false
+                    }, {
+                        label: 'Actual Savings',
+                        data: [25000, 58000, 95000, 142000, 198000, 245000],
+                        borderColor: '#4caf50',
+                        backgroundColor: 'rgba(76, 175, 80, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + (value/1000) + 'K';
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadWeeklyChart() {
+            document.getElementById('weeklyChartLoader').style.display = 'none';
+            document.getElementById('weeklyChart').style.display = 'block';
+            
+            const ctx = document.getElementById('weeklyChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                    datasets: [{
+                        label: 'Average Spending',
+                        data: [1200, 800, 950, 1100, 1800, 2500, 1900],
+                        borderColor: '#1e88e5',
+                        backgroundColor: 'rgba(30, 136, 229, 0.2)',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#1e88e5',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#1e88e5'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 3000,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value;
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadPortfolioChart() {
+            document.getElementById('portfolioChartLoader').style.display = 'none';
+            document.getElementById('portfolioChart').style.display = 'block';
+            
+            const ctx = document.getElementById('portfolioChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Stocks', 'Mutual Funds', 'Fixed Deposits', 'Gold', 'Crypto'],
+                    datasets: [{
+                        data: [150000, 80000, 120000, 45000, 25000],
+                        backgroundColor: [
+                            '#1e88e5',
+                            '#4caf50',
+                            '#ff9800',
+                            '#f44336',
+                            '#9c27b0'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    return label + ': ₹' + value.toLocaleString() + ' (' + percentage + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadCashflowChart() {
+            document.getElementById('cashflowChartLoader').style.display = 'none';
+            document.getElementById('cashflowChart').style.display = 'block';
+            
+            const ctx = document.getElementById('cashflowChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                    datasets: [{
+                        label: 'Income',
+                        data: [15000, 12000, 18000, 20000],
+                        backgroundColor: 'rgba(76, 175, 80, 0.8)',
+                        borderColor: '#4caf50',
+                        borderWidth: 2
+                    }, {
+                        label: 'Expenses',
+                        data: [-8000, -12000, -9500, -11000],
+                        backgroundColor: 'rgba(244, 67, 54, 0.8)',
+                        borderColor: '#f44336',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + Math.abs(value).toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadBudgetVsActualChart() {
+            document.getElementById('budgetVsActualLoader').style.display = 'none';
+            document.getElementById('budgetVsActualChart').style.display = 'block';
+            
+            const ctx = document.getElementById('budgetVsActualChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Food', 'Transport', 'Entertainment', 'Bills', 'Shopping'],
+                    datasets: [{
+                        label: 'Budgeted',
+                        data: [15000, 8000, 5000, 12000, 6000],
+                        backgroundColor: 'rgba(30, 136, 229, 0.6)',
+                        borderColor: '#1e88e5',
+                        borderWidth: 2
+                    }, {
+                        label: 'Actual',
+                        data: [12000, 6000, 3500, 11500, 4500],
+                        backgroundColor: 'rgba(76, 175, 80, 0.6)',
+                        borderColor: '#4caf50',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '₹' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    }
+                }
+            });
+        }
+
+        function loadBudgetProgress() {
+            const budgets = [
+                { id: 'food', spent: 8500, total: 15000 },
+                { id: 'transport', spent: 4200, total: 8000 },
+                { id: 'entertainment', spent: 2800, total: 5000 }
+            ];
+
+            budgets.forEach(budget => {
+                const percentage = (budget.spent / budget.total) * 100;
+                const remaining = budget.total - budget.spent;
+                
+                setTimeout(() => {
+                    document.getElementById(budget.id + 'Progress').style.width = percentage + '%';
+                    document.getElementById(budget.id + 'Spent').textContent = `₹${budget.spent.toLocaleString()} / ₹${budget.total.toLocaleString()}`;
+                    document.getElementById(budget.id + 'Remaining').textContent = `₹${remaining.toLocaleString()} remaining`;
+                    document.getElementById(budget.id + 'Percent').textContent = Math.round(percentage) + '%';
+                }, Math.random() * 1000);
+            });
+        }
+
+        function loadRecentTransactions() {
+            const transactions = [
+                { icon: 'fas fa-utensils', iconBg: '#4caf50', name: 'Zomato', category: 'Food', amount: -850, type: 'expense' },
+                { icon: 'fas fa-car', iconBg: '#2196f3', name: 'Uber', category: 'Transport', amount: -320, type: 'expense' },
+                { icon: 'fas fa-shopping-bag', iconBg: '#9c27b0', name: 'Amazon', category: 'Shopping', amount: -1200, type: 'expense' },
+                { icon: 'fas fa-money-bill', iconBg: '#4caf50', name: 'Salary', category: 'Income', amount: 50000, type: 'income' },
+                { icon: 'fas fa-film', iconBg: '#ff9800', name: 'Netflix', category: 'Entertainment', amount: -799, type: 'expense' }
+            ];
+
+            const transactionsList = document.getElementById('transactionsList');
+            
+            transactions.forEach((transaction, index) => {
+                setTimeout(() => {
+                    const transactionElement = document.createElement('div');
+                    transactionElement.className = 'transaction-item';
+                    transactionElement.style.opacity = '0';
+                    transactionElement.style.transform = 'translateY(20px)';
+                    
+                    transactionElement.innerHTML = `
+                        <div class="transaction-info">
+                            <div class="transaction-icon" style="background-color: ${transaction.iconBg}">
+                                <i class="${transaction.icon}"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <h4>${transaction.name}</h4>
+                                <p>${transaction.category}</p>
+                            </div>
+                        </div>
+                        <div class="transaction-amount ${transaction.type}">
+                            ${transaction.amount > 0 ? '+' : ''}₹${Math.abs(transaction.amount).toLocaleString()}
+                        </div>
+                    `;
+                    
+                    transactionsList.appendChild(transactionElement);
+                    
+                    setTimeout(() => {
+                        transactionElement.style.transition = 'all 0.3s ease';
+                        transactionElement.style.opacity = '1';
+                        transactionElement.style.transform = 'translateY(0)';
+                    }, 100);
+                }, index * 200);
+            });
+        }
+
+        // Start loading simulation when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            simulateDataLoading();
+        });
+    </script>
+</body>
+
+</html>

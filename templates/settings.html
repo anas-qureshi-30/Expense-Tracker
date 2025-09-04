@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename='js/settings.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/settings.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/homePage.css')}}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>FinSight | Settings</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo">
+                <i class="fas fa-robot" style="color: white; font-size: 28px;"></i>
+            </div>
+            <div class="app-name">
+                <span class="brand-name">Fin</span><span class="brand-name">Sight</span><span
+                    class="brand-name">AI</span>
+            </div>
+        </div>
+        <div class="navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Insights</a></li>
+                <li><a href="#">About Us</a></li>
+                <li class="active"><a href="/settings">Settings</a></li>
+                <li><a href="/logout"><button class="logout-btn">Logout</button></a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="settings-container">
+        <div class="settings-header">
+            <h1 class="settings-title">Account Settings</h1>
+            <p class="settings-subtitle">Manage your profile information and preferences</p>
+        </div>
+
+        <div class="settings-layout">
+            <div class="settings-content">
+                <form method="post">
+                    <!-- Profile Section -->
+                    <div class="settings-section">
+                        <h2 class="section-title">Profile Information</h2>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="first-name">First Name</label>
+                                <input type="text" class="form-input" id="first-name" name="first-name" value="Alex"
+                                    readonly>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="last-name">Last Name</label>
+                                <input type="text" class="form-input" id="last-name" name="last-name" value="Johnson"
+                                    readonly>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">Email Address</label>
+                            <input type="email" class="form-input" id="email" name="email"
+                                value="alex.johnson@example.com" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="phone">Phone Number</label>
+                            <input type="tel" class="form-input" id="phone" name="phone"
+                                placeholder="Enter your phone number (optional)">
+                        </div>
+                    </div>
+
+                    <!-- Financial Preferences -->
+                    <div class="settings-section">
+                        <h2 class="section-title">Financial Preferences</h2>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="currency">Currency</label>
+                                <select class="form-select" id="currency" name="currency">
+                                    <option value="INR - Indian Rupee" selected>INR - Indian Rupee</option>
+                                    <option value="USD - US Dollar">USD - US Dollar</option>
+                                    <option value="EUR - Euro">EUR - Euro</option>
+                                    <option value="GBP - British Pound">GBP - British Pound</option>
+                                    <option value="CAD - Canadian Dollar">CAD - Canadian Dollar</option>
+                                    <option value="AUD - Australian Dollar">AUD - Australian Dollar</option>
+                                    <option value="JPY - Japanese Yen">JPY - Japanese Yen</option>
+                                    <option value="CNY - Chinese Yuan">CNY - Chinese Yuan</option>
+                                    <option value="RUB - Russian Ruble">RUB - Russian Ruble</option>
+                                    <option value="BRL - Brazilian Real">BRL - Brazilian Real</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="income">Monthly Income</label>
+                                <div class="currency-input">
+                                    <span class="currency-symbol">$</span>
+                                    <input type="number" class="form-input" id="income" name="income" value="5000" placeholder="Enter Your Monthly Income">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="financial-goals">Primary Financial Goal</label>
+                            <select class="form-select" id="financial-goals" name="financial-goals">
+                                <option value="save">Save for major purchase</option>
+                                <option value="debt" selected>Pay off debt</option>
+                                <option value="emergency">Build emergency fund</option>
+                                <option value="retirement">Save for retirement</option>
+                                <option value="investment">Grow investments</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="payday">Payday (Monthly)</label>
+                            <select class="form-select" id="payday" name="payday">
+                                <option value="1">1st of the month</option>
+                                <option value="15" selected>15th of the month</option>
+                                <option value="last">Last day of the month</option>
+                                <option value="custom">Custom schedule</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Notification Preferences -->
+                    <div class="settings-section">
+                        <h2 class="section-title">Notification Preferences</h2>
+
+                        <div class="form-row-inline">
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="budget-alerts" id="budget-alerts" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label">Budget alerts</span>
+                        </div>
+                        <div class="form-hint">Get notified when you're approaching budget limits</div>
+
+                        <div class="form-row-inline">
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="unusual-spending" id="unusual-spending" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label">Unusual spending alerts</span>
+                        </div>
+                        <div class="form-hint">Get notified about suspicious transactions or spending patterns</div>
+
+                        <div class="form-row-inline">
+                            <label class="toggle-switch">
+                                <input type="checkbox" name="investment-insights" id="investment-insights">
+                                <span class="toggle-slider"></span>
+                            </label>
+                            <span class="toggle-label">Investment insights</span>
+                        </div>
+                        <div class="form-hint">Receive tips and information about potential investments</div>
+                    </div>
+
+                    <!-- Account Management -->
+                    <div class="settings-section">
+                        <h2 class="section-title">Account Management</h2>
+
+                        <div class="danger-zone">
+                            <h3 class="danger-zone-title">Danger Zone</h3>
+                            <p class="danger-zone-text">Once you delete your account, there is no going back. Please be
+                                certain.</p>
+                            <a href="/logout">
+                                <button type="button" class="btn btn-danger">
+                                    <i class="fas fa-exclamation-triangle"></i> Delete Account
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <input type="reset" class="btn btn-secondary" value="Cancel">
+                        <input type="submit" class="btn btn-primary" value="Save Changes" id="submitBtn">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <a href="/chat" class="chat-button">
+        <i class="fa fa-comments"></i>
+    </a>
+</body>
+</html>

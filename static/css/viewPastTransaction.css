@@ -1,0 +1,249 @@
+:root {
+    --color-primary: #1e88e5;
+    --color-primary-dark: #1565c0;
+    --color-accent: #00c853;
+    --color-text-primary: #212121;
+    --color-text-secondary: #616161;
+    --color-border: #e0e0e0;
+    --color-error: #f44336;
+    --color-success: #4caf50;
+    --color-white: #ffffff;
+    --color-bg-light: #f5f7fa;
+    --font-family: 'Poppins', sans-serif;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --transition-speed: 0.3s;
+    --box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--color-bg-light);
+}
+
+.navbar {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 0 2rem;
+    background-color: var(--color-white);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+}
+
+.app-name {
+    display: flex;
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.app-name span:first-child {
+    color: var(--color-primary);
+}
+
+.app-name span:nth-child(2) {
+    color: var(--color-text-primary);
+}
+
+.app-name span:last-child {
+    color: var(--color-accent);
+    margin-left: 2px;
+}
+
+.navigation ul {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    list-style: none;
+}
+
+.navigation ul li a {
+    text-decoration: none;
+    color: var(--color-text-primary);
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-speed) ease;
+}
+
+.navigation ul li a:hover {
+    color: var(--color-primary);
+    background-color: rgba(30, 136, 229, 0.08);
+}
+
+.logout-btn {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    color: var(--color-white);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--color-text-primary);
+    text-align: center;
+}
+
+.page-title span {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.search-box {
+    margin-bottom: 2rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    font-size: 1rem;
+    transition: all var(--transition-speed) ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+.transactions-container {
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+}
+
+.transaction-item {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all var(--transition-speed) ease;
+}
+
+.transaction-item:hover {
+    background-color: rgba(30, 136, 229, 0.02);
+}
+
+.transaction-item:last-child {
+    border-bottom: none;
+}
+
+.transaction-info {
+    flex: 1;
+}
+
+.transaction-description {
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.3rem;
+}
+
+.transaction-date {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.transaction-amount {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.amount-positive {
+    color: var(--color-success);
+}
+
+.amount-negative {
+    color: var(--color-error);
+}
+
+.no-transactions {
+    padding: 3rem;
+    text-align: center;
+    color: var(--color-text-secondary);
+}
+
+.no-transactions i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .navigation {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .navigation ul {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .transaction-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .transaction-amount {
+        align-self: flex-end;
+    }
+}

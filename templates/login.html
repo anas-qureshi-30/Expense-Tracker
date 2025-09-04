@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename='js/login.js')}}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/login.css')}}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/FinSightLogo.jpeg') }}" type="image/x-icon">
+    <title>FinSight AI | Login</title>
+</head>
+<body>
+    <div class="mainContainer">
+        <div class="leftContainer">
+            <div class="brand">
+                <div class="logoContainer">
+                    <i class="fas fa-chart-line logoIcon"></i>
+                    <h1 class="FinSight">FinSight AI</h1>
+                </div>
+                <p class="tagline">Smart financial insights powered by artificial intelligence</p>
+            </div>
+            
+            <div class="imageContainer">
+                <img id="loginImg" src="{{url_for('static',filename='images/loginImg.jpg')}}" alt="Financial Analysis Dashboard">
+            </div>
+            
+        </div>
+        
+        <div class="rightContainer">
+            <div class="loginContainer">
+                <h1 id="loginTitle">Welcome Back</h1>
+                <p class="welcomeText">Log in to access your personalized financial insights</p>
+                
+                <form action="/login" class="formGroup" id="loginForm" method="POST">
+                    <div class="inputGroup">
+                        <input type="email" name="email" id="email" placeholder="Email Address" class="input" required>
+                        <i class="fas fa-envelope inputIcon"></i>
+                        <span class="validation-message" id="emailError">Please enter a valid email address</span>
+                    </div>
+                    
+                    <div class="inputGroup">
+                        <div class="passwordContainer">
+                            <input type="password" name="password" id="password" placeholder="Password" class="input" required>
+                            <i class="fas fa-lock inputIcon"></i>
+                            <i class="fas fa-eye passwordToggle" id="togglePassword"></i>
+                        </div>
+                        <span class="validation-message" id="passwordError">Please enter your password</span>
+                    </div>
+                    
+                    <div class="rememberForgot">
+                        <div class="rememberMe">
+                            <input type="checkbox" id="remember" class="checkbox">
+                            <label for="remember" class="rememberLabel">Remember me</label>
+                        </div>
+                        <a href="/forgetPassword" class="forgotPassword">Forgot Password?</a>
+                    </div>
+                    
+                    <button type="submit" class="loginBtn">Log In</button>
+                </form>
+                
+                <div class="divider">
+                    <span class="dividerText">or continue with</span>
+                </div>
+                
+                <div class="socialLogin">
+                    <div class="socialBtn">
+                        <i class="fab fa-google socialIcon google"></i>
+                    </div>
+                    <div class="socialBtn">
+                        <i class="fab fa-facebook-f socialIcon facebook"></i>
+                    </div>
+                    <div class="socialBtn">
+                        <i class="fab fa-apple socialIcon apple"></i>
+                    </div>
+                </div>
+                
+                <p class="signup">Don't have an account? <a href="/index" class="signupLink">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+    
+    
+</body>
+</html>

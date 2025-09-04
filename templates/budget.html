@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/homePage.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/budget.css')}}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>FinSight | Budget</title>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <div class="logo">
+                <i class="fas fa-robot" style="color: white; font-size: 28px;"></i>
+            </div>
+            <div class="app-name">
+                <span class="brand-name">Fin</span><span class="brand-name">Sight</span><span
+                    class="brand-name">AI</span>
+            </div>
+        </div>
+        <div class="navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="#">Dashboard</a></li>
+                <li class="active"><a href="#">Budget</a></li>
+                <li><a href="#">Insights</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="/settings">Settings</a></li>
+                <li><a href="/logout"><button class="logout-btn">Logout</button></a></li>
+            </ul>
+        </div>
+    </nav>
+    <div id="loader" class="loader-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <div class="budget-container">
+        <div class="budget-header">
+            <h1 class="budget-title">Budget Management</h1>
+            <a href="#set-budget" class="primary-btn">
+                <i class="fas fa-plus"></i> Create New Budget
+            </a>
+        </div>
+
+        <div class="budget-summary">
+            <div class="summary-card">
+                <div class="summary-card-header">
+                    <span class="summary-card-title">Total Budget</span>
+                    <div class="summary-card-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                </div>
+                <div class="summary-card-value">
+                    <span class="currency_symbol">₹</span>
+                    <span id="monthly_budget">0</span>
+                </div>
+                <div class="summary-card-subtitle" id="allocatedDate">No Budget is allocated</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-header">
+                    <span class="summary-card-title">Allocate Budgets</span>
+                    <div class="summary-card-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                </div>
+                <div class="summary-card-value">
+                    <span class="currency_symbol">₹</span>
+                    <span id="spend">0</span>
+                </div>
+                <div class="summary-card-subtitle" id="spentSummary">No Budget is allocated</div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" style="width: 100%;" id="allocatedProgress"></div>
+                    </div>
+                    <div class="progress-labels_main">
+                        <span>₹0</span>
+                        <span>₹0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-card-header">
+                    <span class="summary-card-title">Remaining Budgets</span>
+                    <div class="summary-card-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                </div>
+                <div class="summary-card-value">
+                    <span class="currency_symbol">₹</span>
+                    <span id="remaining">0</span>
+                </div>
+                <div class="summary-card-subtitle" id="remainingSummary">No Budget is allocated</div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-good" style="width: 100%;" id="remainingProgress"></div>
+                    </div>
+                    <div class="progress-labels_main">
+                        <span>₹0</span>
+                        <span>₹0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="budget-tabs">
+            <div class="budget-tab active">Current Budgets</div>
+            <div class="budget-tab">Budget History</div>
+            <div class="budget-tab">Savings Goals</div>
+            <div class="budget-tab">Budget Analytics</div>
+        </div>
+
+        <div class="budget-section">
+            <div class="section-header">
+                <h2 class="section-title">Active Budget Categories</h2>
+                <div class="section-actions">
+                    <select class="form-select" style="width: auto; padding: 8px 36px 8px 12px;">
+                        <option>May 2025</option>
+                        <option>April 2025</option>
+                        <option>March 2025</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="budget-grid" id="budget-grid">
+            </div>
+        </div>
+
+        <!-- Set Overall Budget Form -->
+        <div class="budget-section" id="set-budget">
+            <div class="section-header">
+                <h2 class="section-title">Set Overall Budget</h2>
+            </div>
+
+            <form method="post" class="budget-create-form" id="setBudgetForm">
+                <div class="form-group">
+                    <label class="form-label" for="total-budget"><span>Total Budget Amount </span><span
+                            class="currency_symbol">$</span></label>
+                    <input type="number" class="form-input" id="total-budget" name="total_budget"
+                        placeholder="Enter total budget" required>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="form-label" for="budget-start-date">Start Date</label>
+                    <input type="date" class="form-input" id="budget-start-date" name="start_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="budget-end-date">End Date</label>
+                    <input type="date" class="form-input" id="budget-end-date" name="end_date" required>
+                </div>
+
+                <div class="form-group grid-full">
+                    <label class="form-label" for="budget-description">Description</label>
+                    <textarea class="form-input" id="budget-description" name="description" rows="3"
+                        placeholder="Add description for this budget period" style="resize: none;"></textarea>
+                </div>
+
+                <div class="budget-actions grid-full">
+                    <button type="reset" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Set Budget
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Allocate Budget by Category Form -->
+        <div class="budget-section" id="create-budget">
+            <div class="section-header">
+                <h2 class="section-title">Allocate Budget by Category</h2>
+            </div>
+
+            <form method="post" class="budget-category-form" id="categoryForm">
+                <div class="form-group">
+                    <label class="form-label">Select Category</label>
+                    <div class="category-icons">
+                        <div class="category-icon" data-category="groceries">
+                            <div class="icon-circle">
+                                <i class="fas fa-shopping-basket"></i>
+                            </div>
+                            <div class="icon-name">Groceries</div>
+                        </div>
+
+                        <div class="category-icon" data-category="entertainment">
+                            <div class="icon-circle">
+                                <i class="fas fa-film"></i>
+                            </div>
+                            <div class="icon-name">Entertainment</div>
+                        </div>
+
+                        <div class="category-icon" data-category="shopping">
+                            <div class="icon-circle">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div class="icon-name">Shopping</div>
+                        </div>
+
+                        <div class="category-icon" data-category="utilities">
+                            <div class="icon-circle">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="icon-name">Utilities</div>
+                        </div>
+
+                        <div class="category-icon" data-category="transportation">
+                            <div class="icon-circle">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <div class="icon-name">Transport</div>
+                        </div>
+
+                        <div class="category-icon" data-category="healthcare">
+                            <div class="icon-circle">
+                                <i class="fas fa-heartbeat"></i>
+                            </div>
+                            <div class="icon-name">Healthcare</div>
+                        </div>
+
+                        <div class="category-icon" data-category="education">
+                            <div class="icon-circle">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="icon-name">Education</div>
+                        </div>
+
+                        <div class="category-icon" data-category="travel">
+                            <div class="icon-circle">
+                                <i class="fas fa-plane"></i>
+                            </div>
+                            <div class="icon-name">Travel</div>
+                        </div>
+
+                        <div class="category-icon" data-category="dining">
+                            <div class="icon-circle">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="icon-name">Dining</div>
+                        </div>
+
+                        <div class="category-icon active" data-category="other">
+                            <div class="icon-circle">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                            <div class="icon-name">Other</div>
+                        </div>
+                    </div>
+
+                    <select name="category" id="category" style="display: none;" required>
+                        <option value="groceries">Groceries</option>
+                        <option value="entertainment">Entertainment</option>
+                        <option value="shopping">Shopping</option>
+                        <option value="utilities">Utilities</option>
+                        <option value="transportation">Transportation</option>
+                        <option value="healthcare">Healthcare</option>
+                        <option value="education">Education</option>
+                        <option value="travel">Travel</option>
+                        <option value="dining">Dining</option>
+                        <option value="other" selected>Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="category-amount"><span>Amount to Allocate </span><span
+                            class="currency_symbol">$</span></label>
+                    <input type="number" class="form-input" id="category-amount" name="amount"
+                        placeholder="Enter amount for this category" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="category-notes">Category Notes</label>
+                    <textarea class="form-input" id="category-notes" name="notes" rows="4"
+                        placeholder="Add specific notes for this category allocation" style="resize: none;"
+                        required></textarea>
+                </div>
+
+                <div class="budget-actions">
+                    <button type="reset" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Reset
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Allocate Budget
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <a href="/chat" class="chat-button">
+        <i class="fa fa-comments"></i>
+    </a>
+
+    <script src="{{url_for('static', filename='js/budget.js')}}"></script>
+
+</body>
+
+</html>
