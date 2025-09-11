@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-    submitBtn.addEventListener("click", function () {
+    submitBtn.addEventListener("click", async function () {
         const data = {
             email: email.value,
             phone_no: phone_no.value,
@@ -61,14 +61,13 @@ document.addEventListener("DOMContentLoaded", function () {
             investment_insights: investment_insights.checked,
         };
 
-        fetch('/api/settingsUpdate', {
+        await fetch('/api/settingsUpdate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         })
             .then(res => res.text())
-            .then(alert("Updated Successfully"))
-            .catch(err => console.error(err));
+            .catch(err => console.error(err))
     });
 
 

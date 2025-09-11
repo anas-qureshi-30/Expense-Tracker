@@ -136,7 +136,11 @@ def forgetPassword():
 
 @app.route("/homePage")
 def homePage():
-    return render_template("homePage.html")
+    logged_in=request.cookies.get("loggedin")
+    if logged_in=="true":
+        return render_template("homePage.html")
+    else:   
+        return render_template("index.html")
 
 @app.route('/api/homePageAddExpense')
 def homePageAddExpense():
@@ -258,11 +262,11 @@ def addExpenseDB():
 
 @app.route("/chat",methods=['POST','GET'])
 def chat():
-    # if request.method=='POST':
-    #     user_input = request.json.get('message')
-    #     response=googleGemini.geminiInuput(user_input)
-    #     print(response)
-    #     return jsonify({'reply': response.text})
+    if request.method=='POST':
+        data = request.get_json()
+        user_input=data.get("input")
+        response=googleGemini.geminiInuput(user_input)
+        return jsonify({'replay': response})
     return render_template("chat.html")
 
 @app.route('/settings',methods=['GET','POST'])

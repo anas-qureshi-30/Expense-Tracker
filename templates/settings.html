@@ -84,7 +84,7 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label class="form-label" for="currency">Currency</label>
-                                <select class="form-select" id="currency" name="currency">
+                                <select class="form-select" id="currency" name="currency" required>
                                     <option value="INR - Indian Rupee" selected>INR - Indian Rupee</option>
                                     <option value="USD - US Dollar">USD - US Dollar</option>
                                     <option value="EUR - Euro">EUR - Euro</option>
@@ -101,14 +101,14 @@
                                 <label class="form-label" for="income">Monthly Income</label>
                                 <div class="currency-input">
                                     <span class="currency-symbol">$</span>
-                                    <input type="number" class="form-input" id="income" name="income" value="5000" placeholder="Enter Your Monthly Income">
+                                    <input type="number" class="form-input" id="income" name="income" value="5000" placeholder="Enter Your Monthly Income" required>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="form-label" for="financial-goals">Primary Financial Goal</label>
-                            <select class="form-select" id="financial-goals" name="financial-goals">
+                            <select class="form-select" id="financial-goals" name="financial-goals" required>
                                 <option value="save">Save for major purchase</option>
                                 <option value="debt" selected>Pay off debt</option>
                                 <option value="emergency">Build emergency fund</option>
@@ -119,7 +119,7 @@
 
                         <div class="form-group">
                             <label class="form-label" for="payday">Payday (Monthly)</label>
-                            <select class="form-select" id="payday" name="payday">
+                            <select class="form-select" id="payday" name="payday" required>
                                 <option value="1">1st of the month</option>
                                 <option value="15" selected>15th of the month</option>
                                 <option value="last">Last day of the month</option>

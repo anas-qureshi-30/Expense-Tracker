@@ -54,42 +54,43 @@
                     </div>
                 </div>
             </div>
-
-            <div class="message user-message">
-                <div class="message-header user-header">
-                    <i class="fas fa-user"></i>You
+            <div id="chatSection">
+                <div class="message user-message">
+                    <div class="message-header user-header">
+                        <i class="fas fa-user"></i>You
+                    </div>
+                    <div class="message-content">
+                        I'm planning to invest $10,000 and I'm not sure where to start. I'm in my 30s and want to build wealth for the future. What investment options would you recommend for a moderate risk tolerance?
+                    </div>
+                    <div class="message-time">Today, 2:45 PM</div>
                 </div>
-                <div class="message-content">
-                    I'm planning to invest $10,000 and I'm not sure where to start. I'm in my 30s and want to build wealth for the future. What investment options would you recommend for a moderate risk tolerance?
+    
+                <div class="message ai-message">
+                    <div class="message-header ai-header">
+                        <i class="fas fa-robot"></i>FinSight AI
+                    </div>
+                    <div class="message-content">
+                        <p>Great question! For a $10,000 investment with moderate risk tolerance in your 30s, here are some balanced options to consider:</p>
+                        <br>
+                        <p><strong>1. Diversified ETF Portfolio (60-70%)</strong><br>
+                        Allocate the majority to a mix of low-cost ETFs that track major indexes like S&P 500, international markets, and some sector-specific ETFs.</p>
+                        <br>
+                        <p><strong>2. Bond ETFs (15-20%)</strong><br>
+                        Add some stability with bond ETFs, focusing on intermediate-term bonds for a balance of yield and safety.</p>
+                        <br>
+                        <p><strong>3. Individual Stocks (10-15%)</strong><br>
+                        If you're interested in direct stock ownership, allocate a smaller portion to quality companies you understand and believe in for the long term.</p>
+                        <br>
+                        <p>Before investing, make sure you have an emergency fund and no high-interest debt. Would you like more specific ETF recommendations based on your goals?</p>
+                    </div>
+                    <div class="message-time">Today, 2:47 PM</div>
                 </div>
-                <div class="message-time">Today, 2:45 PM</div>
-            </div>
-
-            <div class="message ai-message">
-                <div class="message-header ai-header">
-                    <i class="fas fa-robot"></i>FinSight AI
-                </div>
-                <div class="message-content">
-                    <p>Great question! For a $10,000 investment with moderate risk tolerance in your 30s, here are some balanced options to consider:</p>
-                    <br>
-                    <p><strong>1. Diversified ETF Portfolio (60-70%)</strong><br>
-                    Allocate the majority to a mix of low-cost ETFs that track major indexes like S&P 500, international markets, and some sector-specific ETFs.</p>
-                    <br>
-                    <p><strong>2. Bond ETFs (15-20%)</strong><br>
-                    Add some stability with bond ETFs, focusing on intermediate-term bonds for a balance of yield and safety.</p>
-                    <br>
-                    <p><strong>3. Individual Stocks (10-15%)</strong><br>
-                    If you're interested in direct stock ownership, allocate a smaller portion to quality companies you understand and believe in for the long term.</p>
-                    <br>
-                    <p>Before investing, make sure you have an emergency fund and no high-interest debt. Would you like more specific ETF recommendations based on your goals?</p>
-                </div>
-                <div class="message-time">Today, 2:47 PM</div>
             </div>
         </div>
 
         <div class="input-container">
-            <textarea class="input-field" placeholder="Ask about finance, investments, budgeting..."></textarea>
-            <button class="send-button">
+            <input type="text" class="input-field" placeholder="Ask about finance, investments, budgeting..." id="userInput">
+            <button class="send-button" id="btn">
                 <i class="fas fa-paper-plane"></i>
             </button>
         </div>
